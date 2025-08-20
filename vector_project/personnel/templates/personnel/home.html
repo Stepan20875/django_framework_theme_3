@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{ project_description }}</h1>
+    <div class="employee-cards">
+        {% for employee in employees %}
+            <div class="employee-card">
+                <a href="{% url 'employee_detail' employee.pk %}">
+                    <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
+                    <p>Skills:
+                        {% for skill in employee.skills.all %}
+                            {{ skill.name }}
+                        {% endfor %}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Employee Details</h1>
+    <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
+    <p>Gender: {{ employee.get_gender_display }}</p>
+    <h3>Skills</h3>
+    <ul>
+        {% for skill in employee.skills.all %}
+            <li>{{ skill.get_name_display }} - Level: {{ skill.level }}</li>
+        {% endfor %}
+    </ul>
+        <h3>Images</h3>
+    <div class="image-gallery">
+        {% for image in employee.images.all|dictsort:"order" %}
+            <img src="{{ image.image.url }}" alt="Employee Image" style="max-width: 200px; margin-right: 10px;">
+        {% endfor %}
+    </div>
+        <a href="{% url 'employee_list' %}">Back to list</a>
+{% else %}
+<p>Доступно только авторизованным пользователям. Авторизируйтесь или зарегистрируйтесь</p>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+
+{% endblock %}
